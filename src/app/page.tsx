@@ -66,8 +66,8 @@ const certificates = [
   {
     title: "Civil Service Eligibility - Professional",
     issuer: "Civil Service Commission",
-    date: "2026",
-    link: "#",
+    date: "May 05, 2026",
+    link: "https://exam.csc.gov.ph/list_passers",
   },
   {
     title: "TOPCIT Level 3 Passer",
@@ -256,7 +256,7 @@ export default function Home() {
                       <span className="text-xs font-mono text-text-secondary">{edu.period}</span>
                     </div>
                     <p className="text-sm font-medium text-text-secondary mb-2">{edu.school}</p>
-                    <span className="text-[10px] font-bold bg-white text-black px-2 py-0.5 rounded inline-block">{edu.note}</span>
+                    <span className="text-[10px] font-bold bg-accent text-text-primary px-2 py-0.5 rounded inline-block border border-border">{edu.note}</span>
                   </div>
                 ))}
               </div>
