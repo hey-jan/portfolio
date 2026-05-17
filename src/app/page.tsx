@@ -385,7 +385,7 @@ export default function Home() {
         </aside>
 
         {/* Mobile Dropdown Nav */}
-        <div className="md:hidden p-4 border-b border-border bg-card sticky top-0 z-10 relative">
+        <div className="md:hidden p-4 border-b border-border bg-card sticky top-0 z-50">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="w-full p-3 bg-accent rounded-lg font-medium text-sm text-left flex justify-between items-center outline-none focus:ring-2 focus:ring-text-primary transition-all"
