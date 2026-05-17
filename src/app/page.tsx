@@ -121,6 +121,7 @@ function Badge({ children }: { children: React.ReactNode }) {
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("about");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const renderContent = () => {
     switch (activeSection) {
@@ -231,9 +232,9 @@ export default function Home() {
                 {experience.map((exp) => (
                   <div key={exp.company} className="relative pl-10 group cursor-default">
                     <div className="absolute w-4 h-4 bg-card border-2 border-border rounded-full left-0 top-1.5 z-10 group-hover:border-text-primary group-hover:bg-text-primary transition-all duration-300"></div>
-                    <div className="mb-1 flex justify-between items-start">
-                      <h3 className="text-lg font-bold group-hover:text-text-primary transition-colors">{exp.role}</h3>
-                      <span className="text-xs font-mono text-text-secondary">{exp.period}</span>
+                    <div className="mb-1 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-0">
+                      <span className="text-xs font-mono text-text-secondary self-end sm:self-auto sm:order-last">{exp.period}</span>
+                      <h3 className="text-lg font-bold group-hover:text-text-primary transition-colors leading-tight">{exp.role}</h3>
                     </div>
                     <p className="text-sm font-medium text-text-secondary mb-4">{exp.company}</p>
                     <ul className="space-y-3">
@@ -251,9 +252,9 @@ export default function Home() {
                 {education.map((edu) => (
                   <div key={edu.school} className="relative pl-10 group cursor-default">
                     <div className="absolute w-4 h-4 bg-card border-2 border-border rounded-full left-0 top-1.5 z-10 group-hover:border-text-primary group-hover:bg-text-primary transition-all duration-300"></div>
-                    <div className="mb-1 flex justify-between items-start">
-                      <h3 className="text-lg font-bold group-hover:text-text-primary transition-colors">{edu.degree}</h3>
-                      <span className="text-xs font-mono text-text-secondary">{edu.period}</span>
+                    <div className="mb-1 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-0">
+                      <span className="text-xs font-mono text-text-secondary self-end sm:self-auto sm:order-last">{edu.period}</span>
+                      <h3 className="text-lg font-bold group-hover:text-text-primary transition-colors leading-tight">{edu.degree}</h3>
                     </div>
                     <p className="text-sm font-medium text-text-secondary mb-2">{edu.school}</p>
                     <span className="text-[10px] font-bold bg-accent text-text-primary px-2 py-0.5 rounded inline-block border border-border">{edu.note}</span>
@@ -384,28 +385,57 @@ export default function Home() {
         </aside>
 
         {/* Mobile Dropdown Nav */}
-        <div className="md:hidden p-4 border-b border-border bg-card sticky top-0 z-10">
-          <select
-            value={activeSection}
-            onChange={(e) => setActiveSection(e.target.value)}
-            className="w-full p-3 bg-accent rounded-lg font-medium text-sm border-none outline-none focus:ring-2 focus:ring-text-primary"
+        <div className="md:hidden p-4 border-b border-border bg-card sticky top-0 z-10 relative">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-full p-3 bg-accent rounded-lg font-medium text-sm text-left flex justify-between items-center outline-none focus:ring-2 focus:ring-text-primary transition-all"
           >
-            {navItems.map((item) => (
-              <option key={item.id} value={item.id}>{item.label}</option>
-            ))}
-          </select>
+            {navItems.find(item => item.id === activeSection)?.label || "Menu"}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${isMobileMenuOpen ? "rotate-180" : ""}`}><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+
+          {isMobileMenuOpen && (
+            <div className="absolute top-[calc(100%-0.5rem)] left-4 right-4 bg-card border border-border rounded-lg shadow-xl z-20 overflow-hidden flex flex-col fade-in">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveSection(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`p-3 text-sm text-left hover:bg-accent transition-colors ${
+                    activeSection === item.id 
+                      ? "font-bold text-text-primary bg-accent/50 border-l-2 border-text-primary" 
+                      : "text-text-secondary border-l-2 border-transparent"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 p-8 md:p-12 bg-card overflow-y-auto max-h-[800px]">
+        <div id="content-area" className="flex-1 p-8 md:p-12 bg-card overflow-y-auto max-h-[800px]">
           {renderContent()}
         </div>
       </div>
 
-      <footer className="mt-12 text-center">
-        <p className="text-xs text-text-secondary">
-          © 2026 {profile.name}. Built with Next.js & Tailwind CSS.
+      <footer className="mt-12 mb-8 flex flex-col items-center justify-center gap-4">
+        <p className="text-xs text-text-secondary text-center">
+          © {new Date().getFullYear()} {profile.name}. Built with <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="font-medium text-text-primary hover:underline transition-all">Next.js</a> & <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer" className="font-medium text-text-primary hover:underline transition-all">Tailwind CSS</a>.
         </p>
+        <button 
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('content-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="text-[10px] uppercase tracking-widest font-bold text-text-secondary hover:text-text-primary transition-colors flex items-center gap-1 group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-y-1 transition-transform duration-300"><path d="m18 15-6-6-6 6"/></svg>
+          Back to Top
+        </button>
       </footer>
     </main>
   );
