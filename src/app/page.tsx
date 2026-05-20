@@ -3,115 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
-
-// --- Data ---
-const profile = {
-  name: "John Earl P. Balabat",
-  role: "Full-Stack Developer / Data Analyst",
-  location: "Cebu City, Cebu",
-  email: "johnearl.balabat@gmail.com",
-  github: "github.com/hey-jan",
-  linkedin: "linkedin.com/in/john-earl-balabat",
-  summary: "I am a developer focused on building applications and tools that use data to create meaningful insights and user-focused experiences. I enjoy working across both software development and data analytics, turning ideas into practical solutions, from developing interactive web applications to processing and visualizing data.",
-};
-
-const navItems = [
-  { id: "about", label: "About" },
-  { id: "skills", label: "Tech Stack" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "certificates", label: "Certificates" },
-  { id: "contact", label: "Contact" },
-];
-
-const skillGroups = [
-  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind"] },
-  { title: "Backend", items: ["Node.js", "Python", "Java", "PHP", "Express.js", "NestJS", "FastAPI", "PostgreSQL", "MySQL", "GraphQL"] },
-  { title: "Tools", items: ["Git", "GitHub", "Docker", "VS Code", "JIRA", "Trello", "ClickUp"] },
-];
-
-const projects = [
-  {
-    title: "VisiTrack",
-    description: "A real-time facial recognition attendance system built for classroom management. It allows instructors to record attendance through webcam or uploaded images, while admins manage students, classes, and attendance records.",
-    tech: ["Next.js", "FastAPI", "PostgreSQL", "InsightFace", "OpenCV"],
-    link: "https://visitrack-nu.vercel.app/",
-  },
-];
-
-const experience = [
-  {
-    company: "Right Apps Incorporated",
-    role: "Software Developer Intern",
-    period: "Sep 2025 - Nov 2025",
-    bullets: [
-      "Contributed to the development of a full-stack POS management system supporting core retail workflows.",
-      "Built and maintained multiple GraphQL modules and endpoints for authentication, RBAC, and inventory.",
-      "Implemented backend features using Node.js, Express, Apollo Server, and Prisma.",
-      "Developed and optimized reusable UI components using Next.js and Tailwind CSS.",
-    ],
-  },
-];
-
-const education = [
-  {
-    school: "University of Cebu Main Campus",
-    period: "2022 - Present",
-    degree: "Bachelor of Science in Computer Science",
-    note: "Consistent Dean's Lister",
-  },
-];
-
-const certificates = [
-  {
-    title: "Civil Service Eligibility - Professional",
-    issuer: "Civil Service Commission",
-    date: "May 05, 2026",
-    link: "https://exam.csc.gov.ph/list_passers",
-  },
-  {
-    title: "TOPCIT Level 3 Passer",
-    issuer: "Test of Practical Competency in IT",
-    date: "Dec 10, 2025",
-    link: "https://drive.google.com/file/d/1lI_RBGvCu2DPhgjD5SZ1ucJQqwyCOkqM/view?usp=sharing",
-  },
-  {
-    title: "Google Cybersecurity Professional Certificate",
-    issuer: "Coursera",
-    date: "Jun 05, 2025",
-    link: "https://www.credly.com/badges/adb63693-bc90-471c-9d25-64cf109dd3ac/public_url",
-  },
-  {
-    title: "Google AI Essentials",
-    issuer: "Coursera",
-    date: "Jun 02, 2025",
-    link: "https://www.credly.com/badges/aef4767f-7190-42d4-a303-9c5308a8752c/public_url",
-  },
-  {
-    title: "Meta Front-End Developer Professional Certificate",
-    issuer: "Coursera",
-    date: "Oct 02, 2025",
-    link: "https://www.credly.com/badges/1ecd1af2-0a20-4326-a02e-cba20252d7f5/public_url",
-  },
-  {
-    title: "Google Data Analytics Professional Certificate",
-    issuer: "Coursera",
-    date: "Jun 24, 2025",
-    link: "https://www.credly.com/badges/309f390e-14fe-4258-8e3a-4de22ab8b3b5/public_url",
-  },
-  {
-    title: "Microsoft Power BI Data Analyst Professional Certificate",
-    issuer: "Coursera",
-    date: "Dec 10, 2025",
-    link: "https://www.credly.com/badges/877f682d-a93d-4c5e-aa96-f9ebfb655eed/public_url",
-  },
-  {
-    title: "CCNA: Introduction to Networks",
-    issuer: "Cisco",
-    date: "Aug 30, 2025",
-    link: "https://www.credly.com/badges/33aca833-9193-4bc6-a867-efbb45c96a92/public_url",
-  },
-];
+import {
+  profile,
+  navItems,
+  skillGroups,
+  projects,
+  experience,
+  education,
+  certificates,
+  workingStyle,
+} from "@/data/portfolio";
 
 // --- Components ---
 
@@ -131,10 +32,10 @@ export default function Home() {
             <section>
               <h2 className="text-2xl font-bold text-text-primary mb-6">About</h2>
               <div className="grid md:grid-cols-2 gap-8">
-                <p className="text-sm text-text-secondary leading-relaxed">
+                <p className="text-sm text-text-secondary leading-relaxed text-justify">
                   {profile.summary}
                 </p>
-                <p className="text-sm text-text-secondary leading-relaxed">
+                <p className="text-sm text-text-secondary leading-relaxed text-justify">
                   I continuously improve my skills in programming, problem-solving, and system design, with a strong emphasis on writing clean, efficient, and reliable code. I am especially interested in projects that combine development and data, allowing me to build complete solutions that are both functional and insightful.
                 </p>
               </div>
@@ -148,21 +49,21 @@ export default function Home() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y2="22.08" y1="12.01" /></svg>
                   </div>
                   <h4 className="text-sm font-bold">Software Development</h4>
-                  <p className="text-xs text-text-secondary leading-relaxed">Building scalable, performant web applications using modern frameworks like Next.js and Node.js.</p>
+                  <p className="text-xs text-text-secondary leading-relaxed text-justify">Building scalable, performant web applications using modern frameworks like Next.js and Node.js.</p>
                 </div>
                 <div className="space-y-3">
                   <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
                   </div>
                   <h4 className="text-sm font-bold">Data Analytics</h4>
-                  <p className="text-xs text-text-secondary leading-relaxed">Transforming complex datasets into actionable insights through visualization and structured analysis.</p>
+                  <p className="text-xs text-text-secondary leading-relaxed text-justify">Transforming complex datasets into actionable insights through visualization and structured analysis.</p>
                 </div>
                 <div className="space-y-3">
                   <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
                   </div>
                   <h4 className="text-sm font-bold">Problem Solving</h4>
-                  <p className="text-xs text-text-secondary leading-relaxed">Designing practical, purposeful tools that solve real-world operational challenges for users.</p>
+                  <p className="text-xs text-text-secondary leading-relaxed text-justify">Designing practical, purposeful tools that solve real-world operational challenges for users.</p>
                 </div>
               </div>
             </section>
@@ -170,7 +71,7 @@ export default function Home() {
             <section className="pt-8 border-t border-border">
               <h3 className="text-xs font-bold text-text-primary uppercase tracking-widest mb-6">Working Style</h3>
               <div className="flex flex-wrap gap-3">
-                {["Collaboration", "Problem Solving", "Adaptability", "Critical Thinking", "Communication", "Attention to Detail"].map((skill) => (
+                {workingStyle.map((skill) => (
                   <span key={skill} className="px-4 py-2 bg-accent text-text-secondary text-xs font-medium rounded-full">
                     {skill}
                   </span>
@@ -226,7 +127,7 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-text-primary mb-8">Experience</h2>
               <div className="relative space-y-12">
                 {/* Continuous Vertical Line */}
-                <div className="absolute left-[7.5px] top-2 bottom-2 w-[1px] bg-border"></div>
+                <div className="absolute left-[7.5px] top-2 bottom-2 w-px] bg-border"></div>
 
                 {/* Experience Items */}
                 {experience.map((exp) => (
@@ -368,7 +269,7 @@ export default function Home() {
       </div>
 
       {/* Main Container Card */}
-      <div className="main-card max-w-4xl w-full flex flex-col md:flex-row min-h-[600px] overflow-hidden">
+      <div className="main-card max-w-4xl w-full flex flex-col md:flex-row min-h-150 overflow-hidden">
         {/* Desktop Sidebar */}
         <aside className="hidden md:block w-64 border-r border-border p-6 bg-card shrink-0">
           <nav className="flex flex-col gap-2 sticky top-6">
@@ -417,7 +318,7 @@ export default function Home() {
         </div>
 
         {/* Content Area */}
-        <div id="content-area" className="flex-1 p-8 md:p-12 bg-card overflow-y-auto max-h-[800px]">
+        <div id="content-area" className="flex-1 p-8 md:p-12 bg-card overflow-y-auto max-h-200">
           {renderContent()}
         </div>
       </div>

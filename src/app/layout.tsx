@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "John Earl P. Balabat | Portfolio",
   description:
     "Portfolio of John Earl P. Balabat, a developer focused on full-stack development and data-driven applications.",
+  icons: {
+    icon: "/profile.png",
+  },
 };
 
 export default function RootLayout({
