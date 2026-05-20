@@ -27,12 +27,106 @@ export const skillGroups = [
 ];
 
 // Projects
-export const projects = [
+export type GalleryImage = {
+  src: string;
+  caption: string;
+  category: "Admin" | "Instructor";
+};
+
+export type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+  mainImage?: string;
+  video?: string;
+  gallery?: GalleryImage[];
+};
+
+export const projects: Project[] = [
   {
     title: "VisiTrack",
     description: "A real-time facial recognition attendance system built for classroom management. It allows instructors to record attendance through webcam or uploaded images, while admins manage students, classes, and attendance records.",
     tech: ["Next.js", "FastAPI", "PostgreSQL", "InsightFace", "OpenCV"],
     link: "https://visitrack-nu.vercel.app/",
+    mainImage: "/images/projects/visitrack/live-recognition.jpg",
+    gallery: [
+      {
+        src: "/images/projects/visitrack/live-recognition.jpg",
+        caption: "Live Face Recognition — Real-time webcam attendance capture",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/login.png",
+        caption: "Login — Secure authentication portal for all user roles",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-dashboard.png",
+        caption: "Admin Dashboard — System-wide overview and analytics",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-academic-classes.png",
+        caption: "Academic Classes — Manage class schedules and sections",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-class-profile.png",
+        caption: "Class Profile — Detailed view of enrolled students and schedule",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-enroll-csv.png",
+        caption: "Enroll via CSV — Bulk enrollment of students through CSV upload",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-import-csv.png",
+        caption: "Import CSV — Import and validate student data from spreadsheets",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-instructor-management.png",
+        caption: "Instructor Management — Add, edit, and manage instructor accounts",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-student-directory-programs.png",
+        caption: "Student Directory — Browse students by program and year level",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-settings.png",
+        caption: "Admin Settings — Configure system-wide preferences",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/instructor-dashboard.png",
+        caption: "Instructor Dashboard — Overview of classes and today's attendance",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/instructor-my-classes.png",
+        caption: "My Classes — View and manage assigned class sections",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/instructor-master-roster.png",
+        caption: "Master Roster — Full list of enrolled students per class",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/instructor-attendance-logs.png",
+        caption: "Attendance Logs — Review and export attendance records",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/instructor-account-settings.png",
+        caption: "Account Settings — Instructor profile and preference management",
+        category: "Instructor",
+      },
+    ],
   },
 ];
 

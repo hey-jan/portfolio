@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
@@ -12,12 +12,251 @@ import {
   education,
   certificates,
   workingStyle,
+  type GalleryImage,
 } from "@/data/portfolio";
+
+// --- Gallery Lightbox Component ---
+
+type LightboxCategory = "All" | "Admin" | "Instructor";
+const CATEGORIES: LightboxCategory[] = ["All", "Admin", "Instructor"];
+
+function GalleryLightbox({
+  gallery,
+  initialIndex,
+  onClose,
+}: {
+  gallery: GalleryImage[];
+  initialIndex: number;
+  onClose: () => void;
+}) {
+  const [activeCategory, setActiveCategory] = useState<LightboxCategory>("All");
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  const filtered = activeCategory === "All" ? gallery : gallery.filter((g) => g.category === activeCategory);
+
+  // When category changes, reset to first image
+  const handleCategoryChange = (cat: LightboxCategory) => {
+    setActiveCategory(cat);
+    setCurrentIndex(0);
+  };
+
+  const prev = useCallback(() => {
+    setCurrentIndex((i) => (i - 1 + filtered.length) % filtered.length);
+  }, [filtered.length]);
+
+  const next = useCallback(() => {
+    setCurrentIndex((i) => (i + 1) % filtered.length);
+  }, [filtered.length]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [prev, next, onClose]);
+
+  const current = filtered[currentIndex];
+  if (!current) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto py-6 px-4"
+      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-5xl flex flex-col gap-4 my-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top bar: category tabs + close button */}
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          {/* Category filter tabs */}
+          <div className="flex gap-2 flex-wrap">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => handleCategoryChange(cat)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                  activeCategory === cat
+                    ? "bg-white text-black"
+                    : "bg-white/10 text-white/60 hover:bg-white/20 hover:text-white"
+                }`}
+              >
+                {cat}
+                <span className="ml-1.5 opacity-60">
+                  {cat === "All" ? gallery.length : gallery.filter((g) => g.category === cat).length}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-xs font-medium shrink-0"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Close (Esc)
+          </button>
+        </div>
+
+        {/* Main image area */}
+        <div className="relative bg-black/40 rounded-2xl overflow-hidden border border-white/10" style={{ aspectRatio: "16/9" }}>
+          <Image
+            key={current.src}
+            src={current.src}
+            alt={current.caption}
+            fill
+            className="object-contain"
+            sizes="(max-width: 1024px) 100vw, 80vw"
+            priority
+          />
+
+          {/* Prev button */}
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+
+          {/* Counter badge */}
+          <div className="absolute top-3 right-3 bg-black/60 text-white/80 text-xs font-mono px-2.5 py-1 rounded-full border border-white/10">
+            {currentIndex + 1} / {filtered.length}
+          </div>
+        </div>
+
+        {/* Caption */}
+        <p className="text-center text-white/80 text-sm font-medium tracking-wide">{current.caption}</p>
+
+        {/* Thumbnail strip */}
+        <div className="flex gap-2 overflow-x-auto pb-1 justify-start md:justify-center">
+          {filtered.map((img, i) => (
+            <button
+              key={img.src}
+              onClick={() => setCurrentIndex(i)}
+              className={`shrink-0 w-16 h-10 relative rounded-md overflow-hidden border-2 transition-all ${
+                i === currentIndex ? "border-white scale-105" : "border-transparent opacity-50 hover:opacity-80"
+              }`}
+            >
+              <Image src={img.src} alt={img.caption} fill className="object-cover" sizes="64px" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // --- Components ---
 
 function Badge({ children }: { children: React.ReactNode }) {
   return <span className="badge mr-2 mb-2">{children}</span>;
+}
+
+function ProjectsSection() {
+  const [lightboxProject, setLightboxProject] = useState<typeof projects[0] | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openGallery = (project: typeof projects[0], index = 0) => {
+    setLightboxProject(project);
+    setLightboxIndex(index);
+  };
+
+  const closeGallery = useCallback(() => {
+    setLightboxProject(null);
+  }, []);
+
+  return (
+    <div className="space-y-8 fade-in">
+      <h2 className="text-2xl font-bold text-text-primary">Projects</h2>
+      {projects.map((project) => (
+        <div key={project.title} className="border border-border rounded-xl overflow-hidden hover:border-text-secondary transition-colors">
+          {/* Main screenshot preview */}
+          {project.mainImage && project.gallery && (
+            <button
+              onClick={() => openGallery(project, 0)}
+              className="relative w-full block group focus:outline-none"
+              style={{ aspectRatio: "16/7" }}
+              aria-label={`Open ${project.title} screenshot gallery`}
+            >
+              <Image
+                src={project.mainImage}
+                alt={`${project.title} preview`}
+                fill
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                sizes="(max-width: 768px) 100vw, 700px"
+                priority
+              />
+              {/* Dark overlay on hover */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-white text-sm font-semibold tracking-wide translate-y-2 group-hover:translate-y-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  View {project.gallery.length} Screenshots
+                </span>
+              </div>
+              {/* Category badge strip */}
+              <div className="absolute bottom-3 left-3 flex gap-1.5">
+                {(["Admin", "Instructor"] as const).map((cat) => {
+                  const count = project.gallery!.filter((g) => g.category === cat).length;
+                  return count > 0 ? (
+                    <span key={cat} className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-black/60 text-white/80 border border-white/10 backdrop-blur-sm">
+                      {cat} · {count}
+                    </span>
+                  ) : null;
+                })}
+              </div>
+            </button>
+          )}
+
+          {/* Project info */}
+          <div className="p-6">
+            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+            <p className="text-text-secondary text-sm mb-4 leading-relaxed">{project.description}</p>
+            <div className="flex flex-wrap mb-4">
+              {project.tech.map((t) => (
+                <Badge key={t}>{t}</Badge>
+              ))}
+            </div>
+            <div className="flex gap-3 flex-wrap">
+              <a href={project.link} target="_blank" rel="noreferrer" className="btn-primary text-xs">
+                View Project
+              </a>
+              {project.gallery && (
+                <button
+                  onClick={() => openGallery(project, 0)}
+                  className="px-4 py-2 text-xs font-semibold border border-border rounded-lg hover:border-text-secondary hover:bg-accent transition-all flex items-center gap-1.5"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  Browse Gallery
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* Lightbox */}
+      {lightboxProject?.gallery && (
+        <GalleryLightbox
+          gallery={lightboxProject.gallery}
+          initialIndex={lightboxIndex}
+          onClose={closeGallery}
+        />
+      )}
+    </div>
+  );
 }
 
 export default function Home() {
@@ -102,23 +341,7 @@ export default function Home() {
         );
       case "projects":
         return (
-          <div className="space-y-8 fade-in">
-            <h2 className="text-2xl font-bold text-text-primary">Projects</h2>
-            {projects.map((project) => (
-              <div key={project.title} className="p-6 border border-border rounded-xl hover:border-text-secondary transition-colors">
-                <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                <p className="text-text-secondary text-sm mb-4 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap mb-4">
-                  {project.tech.map((t) => (
-                    <Badge key={t}>{t}</Badge>
-                  ))}
-                </div>
-                <a href={project.link} target="_blank" rel="noreferrer" className="btn-primary text-xs">
-                  View Project
-                </a>
-              </div>
-            ))}
-          </div>
+          <ProjectsSection />
         );
       case "experience":
         return (
