@@ -49,13 +49,8 @@ export const projects: Project[] = [
     description: "A real-time facial recognition attendance system built for classroom management. It allows instructors to record attendance through webcam or uploaded images, while admins manage students, classes, and attendance records.",
     tech: ["Next.js", "FastAPI", "PostgreSQL", "InsightFace", "OpenCV"],
     link: "https://visitrack-nu.vercel.app/",
-    mainImage: "/images/projects/visitrack/live-recognition.jpg",
+    mainImage: "/images/projects/visitrack/login.png",
     gallery: [
-      {
-        src: "/images/projects/visitrack/live-recognition.jpg",
-        caption: "Live Face Recognition — Real-time webcam attendance capture",
-        category: "Instructor",
-      },
       {
         src: "/images/projects/visitrack/login.png",
         caption: "Login — Secure authentication portal for all user roles",
@@ -124,6 +119,11 @@ export const projects: Project[] = [
       {
         src: "/images/projects/visitrack/instructor-account-settings.png",
         caption: "Account Settings — Instructor profile and preference management",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/live-recognition.jpg",
+        caption: "Live Face Recognition — Real-time webcam attendance capture",
         category: "Instructor",
       },
     ],
