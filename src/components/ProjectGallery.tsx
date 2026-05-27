@@ -43,7 +43,7 @@ export function ProjectGallery({ gallery }: { gallery: GalleryImage[] }) {
           <div key={idx} className="flex flex-col items-center">
             <button
               onClick={() => setLightboxIndex(idx)}
-              className="w-full relative rounded-xl overflow-hidden border border-border shadow-md bg-black/5 group cursor-zoom-in transition-all hover:ring-2 hover:ring-text-primary"
+              className="w-full relative rounded-xl overflow-hidden border border-border shadow-md group cursor-zoom-in transition-all hover:ring-2 hover:ring-text-primary"
               style={{ aspectRatio: "16/9" }}
             >
               {img.src.endsWith(".mp4") ? (
