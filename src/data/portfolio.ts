@@ -21,9 +21,10 @@ export const navItems = [
 
 // Tech Stack
 export const skillGroups = [
-  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind"] },
-  { title: "Backend", items: ["Node.js", "Python", "Java", "PHP", "Express.js", "NestJS", "FastAPI", "PostgreSQL", "MySQL", "GraphQL"] },
-  { title: "Tools", items: ["Git", "GitHub", "Docker", "VS Code", "JIRA", "Trello", "ClickUp"] },
+  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"] },
+  { title: "Backend", items: ["Node.js", "Python", "Express.js", "NestJS", "FastAPI", "PostgreSQL", "MySQL", "GraphQL"] },
+  { title: "Data", items: ["SQL", "Pandas", "Power BI", "Google Looker Studio"] },
+  { title: "Tools", items: ["Git", "GitHub", "Docker", "VS Code", "Visual Studio", "JIRA", "Trello", "ClickUp"] },
 ];
 
 // Projects
