@@ -30,14 +30,19 @@ export const skillGroups = [
 export type GalleryImage = {
   src: string;
   caption: string;
-  category: "Admin" | "Instructor";
+  category: string;
 };
 
 export type Project = {
+  slug: string;
   title: string;
+  role?: string;
+  context?: string;
   description: string;
+  features?: string[];
   tech: string[];
   link: string;
+  github?: string;
   mainImage?: string;
   video?: string;
   gallery?: GalleryImage[];
@@ -45,85 +50,196 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "brgynexus",
+    title: "BrgyNexus",
+    role: "Lead Full-Stack Developer",
+    context: "Independent Project",
+    description: "A comprehensive barangay management system that streamlines resident requests, staff operations, and administrative oversight. I handled the end-to-end development, from UI/UX design and system architecture to testing and deployment.",
+    features: [
+      "Automated document and certificate generation",
+      "Real-time tracking of resident requests",
+      "Interactive data visualization and analytics dashboard",
+      "Secure QR code document verification",
+      "Robust role-based access control and user management"
+    ],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Vercel"],
+    link: "https://brgynexus.vercel.app/",
+    github: "https://github.com/hey-jan/brgynexus.git",
+    mainImage: "/images/projects/brgynexus/landing-page-full-screen.png",
+    gallery: [
+      {
+        src: "/images/projects/brgynexus/landing-page-full-screen.png",
+        caption: "Landing Page Full Screen",
+        category: "Phase 1: The Introduction",
+      },
+      {
+        src: "/images/projects/brgynexus/resident-dashboard.png",
+        caption: "Resident Dashboard",
+        category: "Phase 2: The Resident Experience",
+      },
+      {
+        src: "/images/projects/brgynexus/resident-request-document.png",
+        caption: "Request Document Form",
+        category: "Phase 2: The Resident Experience",
+      },
+      {
+        src: "/images/projects/brgynexus/resident-my-requests.png",
+        caption: "My Requests Tracking",
+        category: "Phase 2: The Resident Experience",
+      },
+      {
+        src: "/images/projects/brgynexus/staff-pending-requests.png",
+        caption: "Staff Pending Requests",
+        category: "Phase 3: The Staff Operations",
+      },
+      {
+        src: "/images/projects/brgynexus/staff-generate-documents.png",
+        caption: "Staff Generate Documents",
+        category: "Phase 3: The Staff Operations",
+      },
+      {
+        src: "/images/projects/brgynexus/certificate-of-residency.jpg",
+        caption: "Generated Certificate of Residency",
+        category: "Phase 4: Technical Outputs & Security",
+      },
+      {
+        src: "/images/projects/brgynexus/staff-qr-verification.png",
+        caption: "Staff QR Verification",
+        category: "Phase 4: Technical Outputs & Security",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-dashboard.png",
+        caption: "Admin Dashboard",
+        category: "Phase 5: Administration & Analytics",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-analytics.png",
+        caption: "Admin Analytics & Visualizations",
+        category: "Phase 5: Administration & Analytics",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-user-management.png",
+        caption: "Admin User Management",
+        category: "Phase 5: Administration & Analytics",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-document-templates.png",
+        caption: "Admin Document Templates",
+        category: "Phase 5: Administration & Analytics",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-system-reports.png",
+        caption: "Admin System Reports",
+        category: "Phase 5: Administration & Analytics",
+      },
+      {
+        src: "/images/projects/brgynexus/admin-settings.png",
+        caption: "Admin System Settings",
+        category: "Phase 5: Administration & Analytics",
+      },
+    ],
+  },
+  {
+    slug: "visitrack",
     title: "VisiTrack",
-    description: "A real-time facial recognition attendance system built for classroom management. It allows instructors to record attendance through webcam or uploaded images, while admins manage students, classes, and attendance records.",
-    tech: ["Next.js", "FastAPI", "PostgreSQL", "InsightFace", "OpenCV"],
+    role: "Lead Full-Stack Developer",
+    context: "Academic Thesis Project (Team of 4)",
+    description: "A real-time facial recognition attendance system built for classroom management. Led a team of four through the entire software development lifecycle—including system design, UI prototyping, and full-stack implementation. The platform allows instructors to record attendance seamlessly.",
+    features: [
+      "Real-time facial recognition via live webcam feeds",
+      "Support for bulk student enrollment via CSV upload",
+      "Automated attendance logging and report generation",
+      "Instructor dashboard for class and roster management",
+      "Centralized admin control over academic structures"
+    ],
+    tech: ["Next.js", "React", "Tailwind CSS", "FastAPI", "Python", "PostgreSQL", "InsightFace", "OpenCV", "Docker"],
     link: "https://visitrack-nu.vercel.app/",
+    github: "https://github.com/hey-jan/visitrack.git",
     mainImage: "/images/projects/visitrack/login.png",
     gallery: [
       {
         src: "/images/projects/visitrack/login.png",
-        caption: "Login — Secure authentication portal for all user roles",
+        caption: "Login",
         category: "Admin",
       },
       {
         src: "/images/projects/visitrack/admin-dashboard.png",
-        caption: "Admin Dashboard — System-wide overview and analytics",
+        caption: "Admin Dashboard",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-student-directory.png",
+        caption: "Student Directory",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-program-registry.png",
+        caption: "Program Registry",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-year-registry.png",
+        caption: "Year Registry",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-student-profile.png",
+        caption: "Student Profile",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-instructor-registry.png",
+        caption: "Instructor Registry",
+        category: "Admin",
+      },
+      {
+        src: "/images/projects/visitrack/admin-instructor-profile.png",
+        caption: "Instructor Profile",
         category: "Admin",
       },
       {
         src: "/images/projects/visitrack/admin-academic-classes.png",
-        caption: "Academic Classes — Manage class schedules and sections",
+        caption: "Academic Classes",
         category: "Admin",
       },
       {
         src: "/images/projects/visitrack/admin-class-profile.png",
-        caption: "Class Profile — Detailed view of enrolled students and schedule",
-        category: "Admin",
-      },
-      {
-        src: "/images/projects/visitrack/admin-enroll-csv.png",
-        caption: "Enroll via CSV — Bulk enrollment of students through CSV upload",
-        category: "Admin",
-      },
-      {
-        src: "/images/projects/visitrack/admin-import-csv.png",
-        caption: "Import CSV — Import and validate student data from spreadsheets",
-        category: "Admin",
-      },
-      {
-        src: "/images/projects/visitrack/admin-instructor-management.png",
-        caption: "Instructor Management — Add, edit, and manage instructor accounts",
-        category: "Admin",
-      },
-      {
-        src: "/images/projects/visitrack/admin-student-directory-programs.png",
-        caption: "Student Directory — Browse students by program and year level",
-        category: "Admin",
-      },
-      {
-        src: "/images/projects/visitrack/admin-settings.png",
-        caption: "Admin Settings — Configure system-wide preferences",
+        caption: "Class Profile",
         category: "Admin",
       },
       {
         src: "/images/projects/visitrack/instructor-dashboard.png",
-        caption: "Instructor Dashboard — Overview of classes and today's attendance",
+        caption: "Instructor Dashboard",
         category: "Instructor",
       },
       {
         src: "/images/projects/visitrack/instructor-my-classes.png",
-        caption: "My Classes — View and manage assigned class sections",
+        caption: "My Classes",
         category: "Instructor",
       },
       {
-        src: "/images/projects/visitrack/instructor-master-roster.png",
-        caption: "Master Roster — Full list of enrolled students per class",
+        src: "/images/projects/visitrack/instructor-class-attendance-log.png",
+        caption: "Class Attendance Log",
         category: "Instructor",
       },
       {
-        src: "/images/projects/visitrack/instructor-attendance-logs.png",
-        caption: "Attendance Logs — Review and export attendance records",
+        src: "/images/projects/visitrack/live-recognition-4-seconds.mp4",
+        caption: "Live Recognition 4 Seconds",
         category: "Instructor",
       },
       {
-        src: "/images/projects/visitrack/instructor-account-settings.png",
-        caption: "Account Settings — Instructor profile and preference management",
+        src: "/images/projects/visitrack/report1.jpg",
+        caption: "PDF Report - Page 1",
         category: "Instructor",
       },
       {
-        src: "/images/projects/visitrack/live-recognition.jpg",
-        caption: "Live Face Recognition — Real-time webcam attendance capture",
+        src: "/images/projects/visitrack/report2.jpg",
+        caption: "PDF Report - Page 2",
+        category: "Instructor",
+      },
+      {
+        src: "/images/projects/visitrack/report3.jpg",
+        caption: "PDF Report - Page 3",
         category: "Instructor",
       },
     ],
