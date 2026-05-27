@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   profile,
@@ -181,50 +182,20 @@ function ProjectsSection() {
   return (
     <div className="space-y-8 fade-in">
       <h2 className="text-2xl font-bold text-text-primary">Projects</h2>
-      {projects.map((project) => (
-        <div key={project.title} className="border border-border rounded-xl overflow-hidden hover:border-text-secondary transition-colors">
-          {/* Main screenshot preview */}
-          {project.mainImage && project.gallery && (
-            <button
-              onClick={() => openGallery(project, 0)}
-              className="relative w-full block group focus:outline-none"
-              style={{ aspectRatio: "16/7" }}
-              aria-label={`Open ${project.title} screenshot gallery`}
-            >
-              <Image
-                src={project.mainImage}
-                alt={`${project.title} preview`}
-                fill
-                className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                sizes="(max-width: 768px) 100vw, 700px"
-                priority
-              />
-              {/* Dark overlay on hover */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
-                <span className="opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-white text-sm font-semibold tracking-wide translate-y-2 group-hover:translate-y-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                  View {project.gallery.length} Screenshots
-                </span>
-              </div>
-              {/* Category badge strip */}
-              <div className="absolute bottom-3 left-3 flex gap-1.5">
-                {(["Admin", "Instructor"] as const).map((cat) => {
-                  const count = project.gallery!.filter((g) => g.category === cat).length;
-                  return count > 0 ? (
-                    <span key={cat} className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-black/60 text-white/80 border border-white/10 backdrop-blur-sm">
-                      {cat} · {count}
-                    </span>
-                  ) : null;
-                })}
-              </div>
-            </button>
-          )}
-
+      <div className="space-y-8">
+        {projects.map((project) => (
+          <div key={project.title} className="flex flex-col border border-border rounded-xl overflow-hidden hover:border-text-secondary transition-colors">
           {/* Project info */}
-          <div className="p-6">
-            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-            <p className="text-text-secondary text-sm mb-4 leading-relaxed">{project.description}</p>
-            <div className="flex flex-wrap mb-4">
+          <div className="p-6 flex flex-col flex-1">
+            <h3 className="text-xl font-bold mb-1">{project.title}</h3>
+            {(project.role || project.context) && (
+              <div className="text-sm font-semibold text-text-primary mb-3">
+                {project.role}
+                {project.context && <span className="text-text-secondary font-normal"> • {project.context}</span>}
+              </div>
+            )}
+            <p className="text-text-secondary text-sm mb-4 leading-relaxed text-justify">{project.description}</p>
+            <div className="flex flex-wrap mb-4 mt-auto">
               {project.tech.map((t) => (
                 <Badge key={t}>{t}</Badge>
               ))}
@@ -233,19 +204,24 @@ function ProjectsSection() {
               <a href={project.link} target="_blank" rel="noreferrer" className="btn-primary text-xs">
                 View Project
               </a>
-              {project.gallery && (
-                <button
-                  onClick={() => openGallery(project, 0)}
-                  className="px-4 py-2 text-xs font-semibold border border-border rounded-lg hover:border-text-secondary hover:bg-accent transition-all flex items-center gap-1.5"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                  Browse Gallery
-                </button>
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noreferrer" className="px-4 py-2 text-xs font-semibold border border-border rounded-lg hover:border-text-secondary hover:bg-accent transition-all flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
+                  GitHub
+                </a>
               )}
+              <Link
+                href={`/projects/${project.slug}`}
+                className="px-4 py-2 text-xs font-semibold border border-border rounded-lg hover:border-text-secondary hover:bg-accent transition-all flex items-center gap-1.5"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                Read Case Study
+              </Link>
             </div>
           </div>
         </div>
       ))}
+      </div>
 
       {/* Lightbox */}
       {lightboxProject?.gallery && (
@@ -262,6 +238,13 @@ function ProjectsSection() {
 export default function Home() {
   const [activeSection, setActiveSection] = useState("about");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (["about", "projects", "experience", "education", "contact"].includes(hash)) {
+      setActiveSection(hash);
+    }
+  }, []);
 
   const renderContent = () => {
     switch (activeSection) {
@@ -350,7 +333,7 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-text-primary mb-8">Experience</h2>
               <div className="relative space-y-12">
                 {/* Continuous Vertical Line */}
-                <div className="absolute left-[7.5px] top-2 bottom-2 w-px] bg-border"></div>
+                <div className="absolute left-[7.5px] top-2 bottom-2 w-px bg-border"></div>
 
                 {/* Experience Items */}
                 {experience.map((exp) => (
