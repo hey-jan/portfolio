@@ -364,7 +364,16 @@ export default function Home() {
                       <h3 className="text-lg font-bold group-hover:text-text-primary transition-colors leading-tight">{edu.degree}</h3>
                     </div>
                     <p className="text-sm font-medium text-text-secondary mb-2">{edu.school}</p>
-                    <span className="text-[10px] font-bold bg-accent text-text-primary px-2 py-0.5 rounded inline-block border border-border">{edu.note}</span>
+                    {edu.bullets && (
+                      <ul className="space-y-3 mt-3">
+                        {edu.bullets.map((bullet, i) => (
+                          <li key={i} className="text-sm text-text-secondary flex gap-3 leading-relaxed">
+                            <span className="mt-2.5 w-1.5 h-[1.5px] bg-border shrink-0"></span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>

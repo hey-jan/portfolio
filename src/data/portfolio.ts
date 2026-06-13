@@ -23,7 +23,7 @@ export const navItems = [
 export const skillGroups = [
   { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"] },
   { title: "Backend", items: ["Node.js", "Python", "Express.js", "NestJS", "FastAPI", "PostgreSQL", "MySQL", "GraphQL"] },
-  { title: "Data", items: ["SQL", "Pandas", "Power BI", "Google Looker Studio"] },
+  { title: "Data", items: ["SQL", "Pandas", "Power BI", "Google Looker Studio", "Excel", "Google Sheets", "AI"] },
   { title: "Tools", items: ["Git", "GitHub", "Docker", "VS Code", "Visual Studio", "JIRA", "Trello", "ClickUp"] },
 ];
 
@@ -53,7 +53,7 @@ export const projects: Project[] = [
   {
     slug: "brgynexus",
     title: "BrgyNexus",
-    role: "Lead Full-Stack Developer",
+    role: "Full-Stack Developer",
     context: "Independent Project",
     description: "A comprehensive barangay management system that streamlines resident requests, staff operations, and administrative oversight. I handled the end-to-end development, from UI/UX design and system architecture to testing and deployment.",
     features: [
@@ -143,8 +143,8 @@ export const projects: Project[] = [
   {
     slug: "visitrack",
     title: "VisiTrack",
-    role: "Lead Full-Stack Developer",
-    context: "Academic Thesis Project (Team of 4)",
+    role: "Full-Stack Developer",
+    context: "Thesis",
     description: "A real-time facial recognition attendance system built for classroom management. Led a team of four through the entire software development lifecycle—including system design, UI prototyping, and full-stack implementation. The platform allows instructors to record attendance seamlessly.",
     features: [
       "Real-time facial recognition via live webcam feeds",
@@ -266,9 +266,12 @@ export const experience = [
 export const education = [
   {
     school: "University of Cebu Main Campus",
-    period: "2022 - Present",
+    period: "2022 - 2026",
     degree: "Bachelor of Science in Computer Science",
-    note: "Consistent Dean's Lister",
+    bullets: [
+      "Magna Cum Laude",
+      "Consistent Dean's Lister",
+    ],
   },
 ];
 
