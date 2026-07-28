@@ -21,10 +21,12 @@ export const navItems = [
 
 // Tech Stack
 export const skillGroups = [
-  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"] },
-  { title: "Backend", items: ["Node.js", "Python", "Express.js", "NestJS", "FastAPI", "PostgreSQL", "MySQL", "GraphQL"] },
-  { title: "Data", items: ["SQL", "Pandas", "Power BI", "Google Looker Studio", "Excel", "Google Sheets", "AI"] },
-  { title: "Tools", items: ["Git", "GitHub", "Docker", "VS Code", "Visual Studio", "JIRA", "Trello", "ClickUp"] },
+  { title: "Frontend", items: ["JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS", "Vite"] },
+  { title: "Backend", items: ["Node.js", "Python", "Java", "C", "PHP", "Laravel", ".NET", "Express.js", "NestJS", "FastAPI", "GraphQL", "PostgreSQL", "MySQL", "Supabase"] },
+  { title: "Data", items: ["SQL", "Python", "R", "Pandas", "Power BI", "Tableau", "Excel", "Google Sheets"] },
+  { title: "Automation", items: ["n8n", "Make.com", "Zapier"] },
+  { title: "AI", items: ["OpenAI", "Claude", "Gemini", "GitHub Copilot", "Cursor"] },
+  { title: "Tools", items: ["Git", "GitHub", "Docker", "Supabase", "Vercel", "DigitalOcean", "VS Code", "Postman", "JIRA", "Trello", "ClickUp", "Visual Studio", "Slack", "Discord", "Teams"] },
 ];
 
 // Projects
